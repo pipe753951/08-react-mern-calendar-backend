@@ -7,11 +7,17 @@
     "rootDir": "./src" /* Carpeta raíz del código fuente */,
     "strict": true /* Habilita comprobaciones estrictas de tipo */,
     "noImplicitAny": true /* Error si un tipo cae en 'any' por defecto */,
-    "strictNullChecks": true /* Control estricto de null y undefined */,
     "esModuleInterop": true /* Permite importar paquetes CommonJS usando 'import' */,
     "skipLibCheck": true /* Ignora errores de tipo en carpetas node_modules */,
-    "forceConsistentCasingInFileNames": true /* Respeta mayúsculas/minúsculas en sistemas operativos */
+    "forceConsistentCasingInFileNames": true /* Respeta mayúsculas/minúsculas en sistemas operativos */,
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true /* Control estricto de null y undefined */
   },
-  "include": ["src/**/*"],
+  "include": ["src/"],
   "exclude": ["eslint.config.js"]
 }
