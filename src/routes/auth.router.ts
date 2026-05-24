@@ -12,6 +12,7 @@ import {
 } from "../controllers/auth.controller";
 
 import { check } from "express-validator";
+import checkFinalJsonFieldsValidation from "../middlewares/checkFinalJsonFieldsValidation.middleware";
 
 const authRouter = Router();
 
@@ -26,6 +27,8 @@ authRouter.post(
 
     check("password", "Debes introducir una contraseña.").not().isEmpty(),
     check("password", "La contraseña debe ser una cadena de texto.").isString(),
+
+    checkFinalJsonFieldsValidation,
   ],
   loginUser,
 );
@@ -49,6 +52,8 @@ authRouter.post(
       "La contraseña debe tener como mínimo 6 carácteres",
     ).isLength({ min: 6 }),
     // TODO: Validar que la contraseña sea fuerte.
+
+    checkFinalJsonFieldsValidation,
   ],
   registerUser,
 );
