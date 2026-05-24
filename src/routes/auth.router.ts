@@ -5,13 +5,18 @@
 
 import { Router } from "express";
 
+import {
+  loginUser,
+  registerUser,
+  renewUserAuthToken,
+} from "../controllers/auth.controller";
+
 const authRouter = Router();
 
-authRouter.get("/", (request, response) => {
-  console.log(`Un sistema solicitó la ruta ${request.url}`);
-  response.json({
-    ok: true,
-  });
-});
+authRouter.post("/login", loginUser);
+
+authRouter.post("/register", registerUser);
+
+authRouter.put("/renew", renewUserAuthToken);
 
 export default authRouter;

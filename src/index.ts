@@ -11,6 +11,9 @@ const app = express();
 // Directorio público.
 app.use(express.static("public"));
 
+// Convertir información enviada desde peticiones a JSON.
+app.use(express.json());
+
 // TODO: Autenticación -> crear, y autenticar usuarios y renovar sus tokens.
 app.use("/api/auth", authRouter);
 
