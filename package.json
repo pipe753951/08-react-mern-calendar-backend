@@ -1,0 +1,26 @@
+{
+  "name": "mern-calendar-backend",
+  "version": "0.0.1",
+  "description": "The MERN calendar backend created to use calendar frontend, following DevTalles React course.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipe753951/08-react-mern-calendar-backend.git"
+  },
+  "author": "pipe753951",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/pipe753951/08-react-mern-calendar-backend/issues"
+  },
+  "homepage": "https://github.com/pipe753951/08-react-mern-calendar-backend#readme",
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^6.0.3"
+  }
+}
