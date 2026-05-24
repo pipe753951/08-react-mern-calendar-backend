@@ -1,30 +1,37 @@
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
 
-import { RegisterUserRequestBody } from "../types/requests/auth/RegisterUserRequestBody.interface";
-import { LoginUserRequestBody } from "../types/requests/auth/LoginUserRequestBody.interface";
+import type { RegisterUserRequestBody } from "../types/requests/auth/RegisterUserRequestBody.interface";
+import type { LoginUserRequestBody } from "../types/requests/auth/LoginUserRequestBody.interface";
 
 const loginUser = (request: Request, response: Response): Response => {
+  const requestBody: LoginUserRequestBody = request.body;
+  const requestErrorValidationResult = validationResult(request);
+
+  if (!requestErrorValidationResult.isEmpty()) {
+    return response.status(400).json({
+      ok: false,
+      errors: requestErrorValidationResult.mapped(),
+    });
+  }
+
   console.log(`Un sistema solicitó la ruta ${request.url}`);
+
   return response.json({
     ok: true,
     routeType: "login",
+    ...requestBody,
   });
 };
 
 const registerUser = (request: Request, response: Response): Response => {
   const requestBody: RegisterUserRequestBody = request.body;
-  console.log({ requestBody });
+  const requestErrorValidationResult = validationResult(request);
 
-  if (typeof requestBody.name !== "string") {
-    return response
-      .status(400)
-      .json({ ok: false, message: "El nombre debe ser una cadena de texto." });
-  }
-
-  if (requestBody.name.length < 5) {
+  if (!requestErrorValidationResult.isEmpty()) {
     return response.status(400).json({
       ok: false,
-      message: "El nombre debe tener más de cinco letras.",
+      errors: requestErrorValidationResult.mapped(),
     });
   }
 
@@ -36,14 +43,10 @@ const registerUser = (request: Request, response: Response): Response => {
 };
 
 const renewUserAuthToken = (request: Request, response: Response): Response => {
-  const requestBody: LoginUserRequestBody = request.body;
-  console.log({ requestBody });
-
   console.log(`Un sistema solicitó la ruta ${request.url}`);
   return response.json({
     ok: true,
     routeType: "new",
-    ...requestBody,
   });
 };
 
