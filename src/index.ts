@@ -1,6 +1,8 @@
 import express from "express";
 import { config } from "dotenv";
 
+import authRouter from "./routes/auth.router";
+
 config();
 
 // Crear servidor Express
@@ -9,12 +11,10 @@ const app = express();
 // Directorio público.
 app.use(express.static("public"));
 
-// app.get("/", (request, response) => {
-//   console.log(`Un sistema solicitó la ruta ${request.url}`);
-//   response.json({
-//     ok: true,
-//   });
-// });
+// TODO: Autenticación -> crear, y autenticar usuarios y renovar sus tokens.
+app.use("/api/auth", authRouter);
+
+// TODO: CRUD: Eventos del calendario.
 
 // Escuchar peticiones
 app.listen(process.env.PORT, () => {
