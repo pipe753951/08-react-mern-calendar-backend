@@ -12,5 +12,6 @@
     "skipLibCheck": true /* Ignora errores de tipo en carpetas node_modules */,
     "forceConsistentCasingInFileNames": true /* Respeta mayúsculas/minúsculas en sistemas operativos */
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["eslint.config.js"]
 }
