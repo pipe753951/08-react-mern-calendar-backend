@@ -2,11 +2,15 @@ import express from "express";
 import { config } from "dotenv";
 
 import authRouter from "./routes/auth.router";
+import connectDb from "./database/connectDb";
 
 config();
 
-// Crear servidor Express
+// Crear servidor Express.
 const app = express();
+
+// Configuración de la base de datos.
+connectDb();
 
 // Directorio público.
 app.use(express.static("public"));
