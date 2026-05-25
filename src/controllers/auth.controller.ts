@@ -4,6 +4,7 @@ import type { RegisterUserRequestBody } from "../types/requests/auth/RegisterUse
 import type { LoginUserRequestBody } from "../types/requests/auth/LoginUserRequestBody.interface";
 
 import { UserModel } from "../models/User.model";
+import bcrypt from "bcryptjs";
 
 const loginUser = (request: Request, response: Response): Response => {
   const requestBody: LoginUserRequestBody = request.body;
@@ -35,7 +36,22 @@ const registerUser = async (
       });
     }
 
-    const user = new UserModel(requestBody);
+    // Encriptar contraseña
+    const salt = bcrypt.genSaltSync();
+    const encryptedPassword = bcrypt.hashSync(requestBody.password, salt);
+
+    // Reunir datos necesarios para la creación del usuario.
+    // Esto se hace especialmente para evitar el caso de proporcionar información de más
+    // que venga del cuerpo de la petición.
+    const userToCreate: RegisterUserRequestBody = {
+      name: requestBody.name,
+      password: encryptedPassword,
+      email: requestBody.email,
+    };
+
+    // Encriptar contraseña
+
+    const user = new UserModel(userToCreate);
     await user.save();
 
     return response.status(200).json({
