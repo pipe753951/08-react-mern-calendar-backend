@@ -11,7 +11,7 @@ import {
   renewUserAuthToken,
 } from "../controllers/auth.controller";
 
-import { check } from "express-validator";
+import { body, check } from "express-validator";
 import checkFinalJsonFieldsValidation from "../middlewares/checkFinalJsonFieldsValidation.middleware";
 
 const authRouter = Router();

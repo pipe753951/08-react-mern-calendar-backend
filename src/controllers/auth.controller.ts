@@ -24,6 +24,17 @@ const registerUser = async (
   const requestBody: RegisterUserRequestBody = request.body;
 
   try {
+    const userWithRequestedEmail = await UserModel.findOne({
+      email: requestBody.email,
+    });
+
+    if (userWithRequestedEmail) {
+      return response.status(400).json({
+        ok: false,
+        message: "Un usuario con el correo que proporcionaste ya existe.",
+      });
+    }
+
     const user = new UserModel(requestBody);
     await user.save();
 
