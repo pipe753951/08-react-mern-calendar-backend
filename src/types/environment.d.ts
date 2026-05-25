@@ -3,9 +3,12 @@ export {};
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      // Definimos que 'PORT' siempre estará presente en nuestro proyecto como un string
+      // Internet connections.
       PORT: string;
       MONGO_DB_CONNECTION: string;
+
+      // Keys
+      JWT_SIGN: string;
     }
   }
 }

@@ -6,6 +6,7 @@ import type { RegisterUserRequestBody } from "../types/requests/auth/RegisterUse
 import type { LoginUserRequestBody } from "../types/requests/auth/LoginUserRequestBody.interface";
 
 import { UserModel } from "../models/User.model";
+import { generateJWT } from "../helpers/jwt";
 
 const loginUser = async (
   request: Request,
@@ -39,10 +40,17 @@ const loginUser = async (
       });
     }
 
+    // Generar JWT de autenticación.
+    const token = await generateJWT(
+      userWithRequestedEmail.id!,
+      userWithRequestedEmail.name!,
+    );
+
     return response.json({
       ok: true,
       uid: userWithRequestedEmail.id,
       name: userWithRequestedEmail.name,
+      token,
     });
   } catch (error) {
     console.error(
@@ -56,12 +64,6 @@ const loginUser = async (
         "Hubo un error interno desde el servidor. Se recomienda que te comuniques con el administrador para encontrar una solución.",
     });
   }
-
-  return response.json({
-    ok: true,
-    routeType: "login",
-    ...requestBody,
-  });
 };
 
 const registerUser = async (
@@ -98,10 +100,14 @@ const registerUser = async (
     const user = new UserModel(userToCreate);
     await user.save();
 
+    // Generar JWT de autenticación.
+    const token = await generateJWT(user.id!, user.name!);
+
     return response.status(200).json({
       ok: true,
       uid: user.id,
       name: user.name,
+      token,
     });
   } catch (error) {
     console.error(
