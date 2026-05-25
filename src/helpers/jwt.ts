@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const generateJWT = async (uid: string, name: string) => {
+const generateJWT = async (uid: string, name: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     const payload = { uid, name };
 
@@ -18,7 +18,7 @@ const generateJWT = async (uid: string, name: string) => {
           reject("No fue posible generar un token JWT");
         }
 
-        resolve(token);
+        resolve(token!);
       },
     );
   });

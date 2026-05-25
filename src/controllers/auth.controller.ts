@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 import bcrypt from "bcryptjs";
 
+import type { RequestWithJwtPayload } from "../types/requests/RequestWithJwtPayload";
 import type { RegisterUserRequestBody } from "../types/requests/auth/RegisterUserRequestBody.interface";
 import type { LoginUserRequestBody } from "../types/requests/auth/LoginUserRequestBody.interface";
 
@@ -124,11 +125,17 @@ const registerUser = async (
   }
 };
 
-const renewUserAuthToken = (request: Request, response: Response): Response => {
-  console.log(`Un sistema solicitó la ruta ${request.url}`);
+const renewUserAuthToken = (
+  request: RequestWithJwtPayload,
+  response: Response,
+): Response => {
+  const { uid, name } = request.jwtPayload;
+
+  const token = generateJWT(uid, name);
+
   return response.json({
     ok: true,
-    routeType: "new",
+    token,
   });
 };
 
