@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 
 const CalendarEventSchema = new Schema({
   title: {
@@ -21,6 +21,19 @@ const CalendarEventSchema = new Schema({
     ref: "User",
     required: true,
   },
+});
+
+CalendarEventSchema.method("toJSON", function () {
+  const object = this.toObject() as unknown as Partial<
+    ReturnType<typeof this.toObject>
+  > & { id: Types.ObjectId | undefined };
+
+  object.id = object["_id"];
+
+  delete object["__v"];
+  delete object["_id"];
+
+  return object;
 });
 
 const CalendarEventModel = model("calendar_event", CalendarEventSchema);
