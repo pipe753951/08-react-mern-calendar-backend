@@ -11,8 +11,9 @@ import {
   renewUserAuthToken,
 } from "../controllers/auth.controller";
 
-import { body, check } from "express-validator";
+import { check } from "express-validator";
 import checkFinalJsonFieldsValidation from "../middlewares/checkFinalJsonFieldsValidation.middleware";
+import validateJwt from "../middlewares/validateJwt.middleware";
 
 const authRouter = Router();
 
@@ -58,6 +59,6 @@ authRouter.post(
   registerUser,
 );
 
-authRouter.put("/renew", renewUserAuthToken);
+authRouter.post("/renew", validateJwt, renewUserAuthToken);
 
 export default authRouter;

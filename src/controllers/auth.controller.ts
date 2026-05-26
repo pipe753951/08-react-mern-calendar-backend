@@ -125,13 +125,15 @@ const registerUser = async (
   }
 };
 
-const renewUserAuthToken = (
-  request: RequestWithJwtPayload,
+const renewUserAuthToken = async (
+  request: Request,
   response: Response,
-): Response => {
-  const { uid, name } = request.jwtPayload;
+): Promise<Response> => {
+  const typedRequest = request as RequestWithJwtPayload;
 
-  const token = generateJWT(uid, name);
+  const { uid, name } = typedRequest.jwtPayload;
+
+  const token = await generateJWT(uid, name);
 
   return response.json({
     ok: true,

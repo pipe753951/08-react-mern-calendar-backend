@@ -1,4 +1,4 @@
-import type { NextFunction, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 
 import jwt from "jsonwebtoken";
 
@@ -8,12 +8,13 @@ import type {
 } from "../types/requests/RequestWithJwtPayload";
 
 const validateJwt = (
-  request: RequestWithJwtPayload,
+  request: Request,
   response: Response,
   next: NextFunction,
 ): Response | void => {
-  const token = request.header("x.token");
-  console.debug(token);
+  const typedRequest = request as RequestWithJwtPayload;
+
+  const token = typedRequest.header("x.token");
 
   if (!token) {
     return response.status(401).json({
@@ -28,7 +29,7 @@ const validateJwt = (
       process.env.JWT_SIGN,
     ) as AppJwtPayload;
 
-    request.jwtPayload = { uid, name };
+    typedRequest.jwtPayload = { uid, name };
     next();
   } catch {
     return response.status(401).json({
