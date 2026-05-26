@@ -1,5 +1,7 @@
 import express from "express";
+
 import { config } from "dotenv";
+import cors from "cors";
 
 import authRouter from "./routes/auth.router";
 import connectDb from "./database/connectDb";
@@ -11,6 +13,9 @@ const app = express();
 
 // Configuración de la base de datos.
 connectDb();
+
+// CORS
+app.use(cors());
 
 // Directorio público.
 app.use(express.static("public"));
