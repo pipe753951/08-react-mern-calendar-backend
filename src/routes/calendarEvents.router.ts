@@ -5,7 +5,7 @@
 
 import { Router } from "express";
 
-import { check } from "express-validator";
+import { body, check } from "express-validator";
 
 import isDateFnsDate from "../helpers/validators/isDateFnsDate.validator";
 
@@ -28,10 +28,15 @@ calendarEventsRouter.post(
   "/",
   [
     check("title", "Debes proporcionar el título del evento.").not().isEmpty(),
+    check("title", "El título del evento debe ser un texto.").isString(),
 
     check("start", "Debes proporcionar la fecha de inicio del evento.")
       .not()
       .isEmpty(),
+    check(
+      "start",
+      "La fecha de inicio del evento debe ser un número que represente una fecha UNIX.",
+    ).isNumeric(),
     check(
       "start",
       "La fecha de inicio del evento debe tener un formato como tal.",
@@ -41,9 +46,17 @@ calendarEventsRouter.post(
       .not()
       .isEmpty(),
     check(
+      "start",
+      "La fecha de finalización del evento debe ser un número que represente una fecha UNIX.",
+    ).isNumeric(),
+    check(
       "end",
       "La fecha de finalización del evento debe tener un formato como tal.",
     ).custom(isDateFnsDate),
+
+    check("note", "La nota debe ser un texto.")
+      .if(body("note").not().isEmpty())
+      .isString(),
     checkFinalJsonFieldsValidation,
   ],
   createCalendarEvent,
