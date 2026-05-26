@@ -5,7 +5,13 @@
 
 import { Router } from "express";
 
+import { check } from "express-validator";
+
+import isDateFnsDate from "../helpers/validators/isDateFnsDate.validator";
+
 import validateJwt from "../middlewares/validateJwt.middleware";
+import checkFinalJsonFieldsValidation from "../middlewares/checkFinalJsonFieldsValidation.middleware";
+
 import {
   createCalendarEvent,
   deleteCalendarEvent,
@@ -18,7 +24,30 @@ const calendarEventsRouter = Router();
 calendarEventsRouter.use(validateJwt);
 
 calendarEventsRouter.get("/", getCalendarEvents);
-calendarEventsRouter.post("/", createCalendarEvent);
+calendarEventsRouter.post(
+  "/",
+  [
+    check("title", "Debes proporcionar el título del evento.").not().isEmpty(),
+
+    check("start", "Debes proporcionar la fecha de inicio del evento.")
+      .not()
+      .isEmpty(),
+    check(
+      "start",
+      "La fecha de inicio del evento debe tener un formato como tal.",
+    ).custom(isDateFnsDate),
+
+    check("end", "Debes proporcionar la fecha de finalización del evento.")
+      .not()
+      .isEmpty(),
+    check(
+      "end",
+      "La fecha de finalización del evento debe tener un formato como tal.",
+    ).custom(isDateFnsDate),
+    checkFinalJsonFieldsValidation,
+  ],
+  createCalendarEvent,
+);
 calendarEventsRouter.put("/:id", updateCalendarEvent);
 calendarEventsRouter.delete("/:id", deleteCalendarEvent);
 
