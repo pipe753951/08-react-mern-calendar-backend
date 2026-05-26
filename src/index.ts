@@ -5,6 +5,7 @@ import cors from "cors";
 
 import authRouter from "./routes/auth.router";
 import connectDb from "./database/connectDb";
+import calendarEventsRouter from "./routes/calendarEvents.router";
 
 config();
 
@@ -23,10 +24,11 @@ app.use(express.static("public"));
 // Convertir información enviada desde peticiones a JSON.
 app.use(express.json());
 
-// TODO: Autenticación -> crear, y autenticar usuarios y renovar sus tokens.
+// Autenticación -> crear, y autenticar usuarios y renovar sus tokens.
 app.use("/api/auth", authRouter);
 
-// TODO: CRUD: Eventos del calendario.
+// CRUD: Eventos del calendario.
+app.use("/api/events", calendarEventsRouter);
 
 // Escuchar peticiones
 app.listen(process.env.PORT, () => {

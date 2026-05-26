@@ -1,3 +1,8 @@
+/**
+ * Rutas de eventos de calendatio.
+ * Ruta: host + "/api/events"
+ */
+
 import { Router } from "express";
 
 import validateJwt from "../middlewares/validateJwt.middleware";
@@ -16,3 +21,5 @@ calendarEventsRouter.get("/", getCalendarEvents);
 calendarEventsRouter.post("/", createCalendarEvent);
 calendarEventsRouter.put("/:id", updateCalendarEvent);
 calendarEventsRouter.delete("/:id", deleteCalendarEvent);
+
+export default calendarEventsRouter;
