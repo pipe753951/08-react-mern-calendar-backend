@@ -1,0 +1,43 @@
+{
+  "name": "mern-calendar-backend",
+  "version": "0.0.1",
+  "description": "The MERN calendar backend created to use calendar frontend, following DevTalles React course.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "lint": "eslint . "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipe753951/08-react-mern-calendar-backend.git"
+  },
+  "author": "pipe753951",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/pipe753951/08-react-mern-calendar-backend/issues"
+  },
+  "homepage": "https://github.com/pipe753951/08-react-mern-calendar-backend#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^25.9.1",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.4"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.19",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.6.2"
+  }
+}
