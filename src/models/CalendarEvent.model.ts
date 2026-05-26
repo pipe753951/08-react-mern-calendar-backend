@@ -3,25 +3,26 @@ import { model, Schema } from "mongoose";
 const CalendarEventSchema = new Schema({
   title: {
     type: String,
-    require: true,
+    required: true,
   },
   note: {
     type: String,
   },
   start: {
     type: Date,
-    require: true,
+    required: true,
   },
   end: {
     type: Date,
-    require: true,
+    required: true,
   },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
 });
 
-const CalendarEventModel = model("User", CalendarEventSchema);
+const CalendarEventModel = model("calendar_event", CalendarEventSchema);
 
 export { CalendarEventModel, CalendarEventSchema };
