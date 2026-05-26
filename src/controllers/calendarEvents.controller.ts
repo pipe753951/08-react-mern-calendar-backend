@@ -17,6 +17,7 @@ const createCalendarEvent = async (
   response: Response,
 ): Promise<Response> => {
   console.log(`Petición a ${request.url}`);
+  console.debug({ body: request.body });
 
   return response.json({
     ok: true,
