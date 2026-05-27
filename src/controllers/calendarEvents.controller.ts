@@ -53,12 +53,53 @@ const updateCalendarEvent = async (
   request: Request,
   response: Response,
 ): Promise<Response> => {
-  console.log(`Petición a ${request.url}`);
+  const typedRequest = request as RequestWithJwtPayload;
+  const requestBody = request.body as CreateCalendarEventRequestBody;
+  const uid = typedRequest.jwtPayload.uid;
 
-  return response.json({
-    ok: true,
-    controller: "updateCalendarEvents",
-  });
+  const calendarEventId = request.params.id;
+
+  try {
+    const calendarEvent = await CalendarEventModel.findById(calendarEventId);
+
+    if (!calendarEvent) {
+      return response.status(404).json({
+        ok: false,
+        message: "El evento buscado por el ID que proporcionaste no existe.",
+      });
+    }
+
+    if (calendarEvent.user.toString() !== uid) {
+      return response.status(401).json({
+        ok: false,
+        message:
+          "No estás autorizado para modificar el evento; solo el dueño de un evento puede hacer modificaciones sobre el mismo.",
+      });
+    }
+
+    const calendarEventNewData = {
+      ...requestBody,
+      user: uid,
+    };
+
+    const updatedCalendarEvent = await CalendarEventModel.findByIdAndUpdate(
+      calendarEvent.id,
+      calendarEventNewData,
+      { new: true },
+    );
+
+    return response.status(200).json({
+      ok: true,
+      event: updatedCalendarEvent,
+    });
+  } catch (error) {
+    console.error(new Error("Hubo un error inesperado", { cause: error }));
+    return response.status(500).json({
+      ok: false,
+      message:
+        "Hubo un error interno desde el servidor. Se recomienda que te comuniques con el administrador para encontrar una solución.",
+    });
+  }
 };
 
 const deleteCalendarEvent = async (
