@@ -10,11 +10,15 @@ const getCalendarEvents = async (
   request: Request,
   response: Response,
 ): Promise<Response> => {
+  const calendarEvents = await CalendarEventModel.find().populate(
+    "user",
+    "name",
+  );
   console.log(`Petición a ${request.url}`);
 
   return response.json({
     ok: true,
-    controller: "getEvents",
+    calendarEvents,
   });
 };
 
