@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "tsc && node dist/index.js",
+    "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "lint": "eslint . "
   },
@@ -32,8 +32,10 @@
   },
   "dependencies": {
     "@types/cors": "^2.8.19",
+    "@types/date-fns": "^2.5.3",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
+    "date-fns": "^4.3.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-validator": "^7.3.2",

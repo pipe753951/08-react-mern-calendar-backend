@@ -3,19 +3,19 @@ import { model, Schema } from "mongoose";
 const UserSchema = new Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   email: {
     type: String,
-    require: true,
+    required: true,
     unique: true,
   },
   password: {
     type: String,
-    require: true,
+    required: true,
   },
 });
 
-const UserModel = model("User", UserSchema);
+const UserModel = model("user", UserSchema);
 
 export { UserModel, UserSchema };
