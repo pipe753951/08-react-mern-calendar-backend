@@ -106,12 +106,45 @@ const deleteCalendarEvent = async (
   request: Request,
   response: Response,
 ): Promise<Response> => {
-  console.log(`Petición a ${request.url}`);
+  const typedRequest = request as RequestWithJwtPayload;
+  const uid = typedRequest.jwtPayload.uid;
 
-  return response.json({
-    ok: true,
-    controller: "deleteCalendarEvents",
-  });
+  const calendarEventId = request.params.id;
+
+  try {
+    const calendarEvent = await CalendarEventModel.findById(calendarEventId);
+
+    if (!calendarEvent) {
+      return response.status(404).json({
+        ok: false,
+        message: "El evento buscado por el ID que proporcionaste no existe.",
+      });
+    }
+
+    if (calendarEvent.user.toString() !== uid) {
+      return response.status(401).json({
+        ok: false,
+        message:
+          "No estás autorizado para eliminar el evento; solo el dueño de un evento puede hacer eliminar su propio evento.",
+      });
+    }
+
+    const deletedCalendarEvent = await CalendarEventModel.findByIdAndDelete(
+      calendarEvent.id,
+    );
+
+    return response.status(200).json({
+      ok: true,
+      event: deletedCalendarEvent,
+    });
+  } catch (error) {
+    console.error(new Error("Hubo un error inesperado", { cause: error }));
+    return response.status(500).json({
+      ok: false,
+      message:
+        "Hubo un error interno desde el servidor. Se recomienda que te comuniques con el administrador para encontrar una solución.",
+    });
+  }
 };
 
 export {
