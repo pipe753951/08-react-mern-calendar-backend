@@ -137,6 +137,8 @@ const renewUserAuthToken = async (
 
   return response.json({
     ok: true,
+    uid,
+    name,
     token,
   });
 };
