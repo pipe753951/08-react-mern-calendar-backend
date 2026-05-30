@@ -14,3 +14,14 @@ This repository is created to take note for the MERN calendar backend created to
 The project isn't built by default, you need to run development command (`npm run dev`) to run without building, or run `npm run build` to compile your project to JavaScript.
 
 After building, run `npm run start`.
+
+# Deployment note
+
+Note that if you want to deploy this project, you must have the following folder structure:
+
+1. `dist`, where the built backend files are served.
+2. `public`, where the React frontend build are served.
+3. `.env`
+4. NPM package information and NPM modules.
+
+Also, note that if you don't use `public` directory in the same parent folder as `dist`, project frontend will not work.
