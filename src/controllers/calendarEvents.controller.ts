@@ -85,12 +85,12 @@ const updateCalendarEvent = async (
     const updatedCalendarEvent = await CalendarEventModel.findByIdAndUpdate(
       calendarEvent.id,
       calendarEventNewData,
-      { new: true },
+      { returnDocument: "after" },
     );
 
     return response.status(200).json({
       ok: true,
-      event: updatedCalendarEvent,
+      calendarEvent: updatedCalendarEvent,
     });
   } catch (error) {
     console.error(new Error("Hubo un error inesperado", { cause: error }));
