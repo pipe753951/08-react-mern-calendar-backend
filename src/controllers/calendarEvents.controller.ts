@@ -90,7 +90,7 @@ const updateCalendarEvent = async (
 
     return response.status(200).json({
       ok: true,
-      event: updatedCalendarEvent,
+      calendarEvent: updatedCalendarEvent,
     });
   } catch (error) {
     console.error(new Error("Hubo un error inesperado", { cause: error }));
