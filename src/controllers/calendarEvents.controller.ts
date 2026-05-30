@@ -85,7 +85,7 @@ const updateCalendarEvent = async (
     const updatedCalendarEvent = await CalendarEventModel.findByIdAndUpdate(
       calendarEvent.id,
       calendarEventNewData,
-      { new: true },
+      { returnDocument: "after" },
     );
 
     return response.status(200).json({
